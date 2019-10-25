@@ -1,0 +1,35 @@
+the MPC scheme:
+	- 	Input:
+		Continous time system:
+						x_dot(t) 	= 	f(x(t),u(t))
+	- 	Linearize the system around the trajectory:
+						x(k+1)	=	f(x(k),u(k))
+						x(k+1)	=	A_m(k)x(k) + B_m(k)u(k)
+	- 	Predict the future:
+						X(k+1)	=	[	x(k+1)      ]
+									|	x(k+2)      |
+									|	...         |
+									[	x(k+N)		]
+
+						u(k+1)	=	[	0
+										0
+										...
+										0	]
+
+
+	-	Cost function:
+
+			Minimize	J(x,u)	=	H(x(N))	+	L(x(n),u(n),n)
+
+			s.t.		x(k+1)	=	f(x(k),u(k))
+						x(k)	=	x_k
+						H(x)	<	H
+						
+				
+	-	SLQP:
+        LP phase:
+            Minimize    J(x_i,u_i)    +   D_J(x_i,u_i) * p_i
+
+            s.t.        f(x(i),u(i)) - x(i)   +   (A_m(i)x(i) + B_m(i)u(i) - I) * p_i = 0
+                        h(x(i)) + D_h(x(i))p >= 0
+						
